@@ -17,4 +17,10 @@
     <string name="note_saved">Note saved</string>
     <string name="navigate_back">Navigate back</string>
     <string name="note_editor_subtitle">Capture ideas, tasks, or memories in one place.</string>
+    <string name="sort">Sort</string>
+    <string name="sort_newest">Newest first</string>
+    <string name="sort_oldest">Oldest first</string>
+    <string name="sort_title">Title A-Z</string>
+    <string name="editor_stats">%1$d characters | %2$d words</string>
+    <string name="clear">Clear</string>
 </resources>

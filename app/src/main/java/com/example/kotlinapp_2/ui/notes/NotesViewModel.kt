@@ -36,6 +36,7 @@ class NotesViewModel @Inject constructor(
     val events: SharedFlow<NotesEvent> = _events.asSharedFlow()
 
     private val searchQuery = MutableStateFlow("")
+    private var currentSourceNotes: List<Note> = emptyList()
 
     private var lastDeletedNote: Note? = null
 
@@ -57,6 +58,13 @@ class NotesViewModel @Inject constructor(
                 _events.emit(NotesEvent.ShowMessage("Failed to delete note"))
             }
         }
+    }
+
+    fun onSortOptionChanged(sortOption: NoteSortOption) {
+        _uiState.value = _uiState.value.copy(
+            sortOption = sortOption,
+            notes = sortNotes(currentSourceNotes, sortOption),
+        )
     }
 
     fun onUndoDelete() {
@@ -82,8 +90,9 @@ class NotesViewModel @Inject constructor(
                 noteRepository.getAllNotes(query)
             }
             .onEach { notes ->
+                currentSourceNotes = notes
                 _uiState.value = _uiState.value.copy(
-                    notes = notes,
+                    notes = sortNotes(notes, _uiState.value.sortOption),
                     isLoading = false,
                 )
             }
@@ -92,5 +101,13 @@ class NotesViewModel @Inject constructor(
                 _uiState.value = _uiState.value.copy(isLoading = false)
             }
             .launchIn(viewModelScope)
+    }
+
+    private fun sortNotes(notes: List<Note>, sortOption: NoteSortOption): List<Note> {
+        return when (sortOption) {
+            NoteSortOption.NEWEST -> notes.sortedByDescending { it.timestamp }
+            NoteSortOption.OLDEST -> notes.sortedBy { it.timestamp }
+            NoteSortOption.TITLE -> notes.sortedBy { it.title.lowercase() }
+        }
     }
 }

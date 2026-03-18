@@ -58,6 +58,26 @@ class NoteListFragment : Fragment() {
     private fun setupToolbar() {
         binding.toolbar.title = getString(R.string.notes)
         binding.toolbar.inflateMenu(R.menu.menu_notes)
+        binding.toolbar.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.action_sort_newest -> {
+                    notesViewModel.onSortOptionChanged(NoteSortOption.NEWEST)
+                    true
+                }
+
+                R.id.action_sort_oldest -> {
+                    notesViewModel.onSortOptionChanged(NoteSortOption.OLDEST)
+                    true
+                }
+
+                R.id.action_sort_title -> {
+                    notesViewModel.onSortOptionChanged(NoteSortOption.TITLE)
+                    true
+                }
+
+                else -> false
+            }
+        }
 
         val searchItem = binding.toolbar.menu.findItem(R.id.action_search)
         val searchView = searchItem.actionView as SearchView

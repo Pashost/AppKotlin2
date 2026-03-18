@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -39,6 +40,7 @@ class AddEditNoteFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupToolbar()
+        setupEditorEnhancements()
         setupSaveButton()
         observeUiState()
         observeEvents()
@@ -64,6 +66,21 @@ class AddEditNoteFragment : Fragment() {
         }
     }
 
+    private fun setupEditorEnhancements() {
+        binding.etTitle.doAfterTextChanged {
+            updateEditorStatsAndSaveState()
+        }
+        binding.etContent.doAfterTextChanged {
+            updateEditorStatsAndSaveState()
+        }
+        binding.btnClear.setOnClickListener {
+            binding.etTitle.setText("")
+            binding.etContent.setText("")
+            updateEditorStatsAndSaveState()
+        }
+        updateEditorStatsAndSaveState()
+    }
+
     private fun observeUiState() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -77,10 +94,26 @@ class AddEditNoteFragment : Fragment() {
                         binding.etTitle.setText(state.title)
                         binding.etContent.setText(state.content)
                         isInitialDataBound = true
+                        updateEditorStatsAndSaveState()
                     }
                 }
             }
         }
+    }
+
+    private fun updateEditorStatsAndSaveState() {
+        val title = binding.etTitle.text?.toString().orEmpty()
+        val content = binding.etContent.text?.toString().orEmpty()
+        val combinedText = "$title\n$content".trim()
+        val charCount = combinedText.length
+        val wordCount = if (combinedText.isBlank()) {
+            0
+        } else {
+            combinedText.split(Regex("\\s+")).size
+        }
+
+        binding.tvStats.text = getString(R.string.editor_stats, charCount, wordCount)
+        binding.btnSave.isEnabled = title.isNotBlank() && content.isNotBlank()
     }
 
     private fun observeEvents() {

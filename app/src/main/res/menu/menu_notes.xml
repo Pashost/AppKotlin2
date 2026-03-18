@@ -9,4 +9,19 @@
         app:actionViewClass="androidx.appcompat.widget.SearchView"
         app:showAsAction="ifRoom|collapseActionView" />
 
+    <item
+        android:id="@+id/action_sort_newest"
+        android:title="@string/sort_newest"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_sort_oldest"
+        android:title="@string/sort_oldest"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_sort_title"
+        android:title="@string/sort_title"
+        app:showAsAction="never" />
+
 </menu>

@@ -57,6 +57,15 @@
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
                     android:textColor="@color/md_theme_text_muted" />
 
+                <TextView
+                    android:id="@+id/tvStats"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="@string/editor_stats"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                    android:textColor="@color/md_theme_text_muted" />
+
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/titleInputLayout"
                     style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
@@ -120,6 +129,16 @@
                     app:backgroundTint="@color/md_theme_secondary"
                     app:cornerRadius="14dp"
                     app:iconGravity="textStart" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnClear"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/clear"
+                    android:textColor="@color/md_theme_text_muted" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
     </LinearLayout>
