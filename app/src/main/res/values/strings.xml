@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Notes Manager</string>
+    <string name="notes">Notes</string>
+    <string name="add_note">Add note</string>
+    <string name="edit_note">Edit note</string>
+    <string name="title">Title</string>
+    <string name="content">Content</string>
+    <string name="save">Save</string>
+    <string name="save_note">Save Note</string>
+    <string name="search_notes">Search notes</string>
+    <string name="empty_notes_message">No notes yet. Tap + to create one.</string>
+    <string name="note_deleted">Note deleted</string>
+    <string name="undo">Undo</string>
+    <string name="error_loading_notes">Failed to load notes</string>
+    <string name="error_saving_note">Failed to save note</string>
+    <string name="empty_note_error">Title and content cannot be empty</string>
+    <string name="note_saved">Note saved</string>
+    <string name="navigate_back">Navigate back</string>
+    <string name="note_editor_subtitle">Capture ideas, tasks, or memories in one place.</string>
+</resources>
