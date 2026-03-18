@@ -73,8 +73,6 @@ class AddEditNoteFragment : Fragment() {
                         if (state.isEditMode) R.string.edit_note else R.string.add_note
                     )
 
-                    // Bind form values only after initial loading finishes.
-                    // Otherwise, the default empty state overrides edit data.
                     if (!isInitialDataBound && !state.isLoading) {
                         binding.etTitle.setText(state.title)
                         binding.etContent.setText(state.content)
