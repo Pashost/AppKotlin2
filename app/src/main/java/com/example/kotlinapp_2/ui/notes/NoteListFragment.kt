@@ -101,7 +101,10 @@ class NoteListFragment : Fragment() {
                 val direction = NoteListFragmentDirections
                     .actionNoteListFragmentToAddEditNoteFragment(note.id)
                 findNavController().navigate(direction)
-            }
+            },
+            onNoteCheckedChanged = { note, isChecked ->
+                notesViewModel.onNoteCheckedChanged(note, isChecked)
+            },
         )
 
         binding.recyclerView.apply {
@@ -145,6 +148,20 @@ class NoteListFragment : Fragment() {
                     notesAdapter.submitList(state.notes)
                     binding.progressBar.isVisible = state.isLoading
                     binding.tvEmptyState.isVisible = !state.isLoading && state.notes.isEmpty()
+
+                    val totalNotes = state.notes.size
+                    val checkedNotes = state.notes.count { it.isChecked }
+                    val percentage = if (totalNotes == 0) {
+                        0
+                    } else {
+                        (checkedNotes * 100) / totalNotes
+                    }
+                    binding.tvProgressStatus.text = getString(
+                        R.string.note_progress_status,
+                        percentage,
+                        checkedNotes,
+                        totalNotes,
+                    )
                 }
             }
         }
