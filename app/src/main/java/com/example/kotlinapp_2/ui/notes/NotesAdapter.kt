@@ -3,6 +3,7 @@ package com.example.kotlinapp_2.ui.notes
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import android.graphics.Paint
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -14,6 +15,7 @@ import kotlin.math.abs
 
 class NotesAdapter(
     private val onNoteClicked: (Note) -> Unit,
+    private val onNoteCheckedChanged: (Note, Boolean) -> Unit,
 ) : ListAdapter<Note, NotesAdapter.NoteViewHolder>(DiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
@@ -53,8 +55,33 @@ class NotesAdapter(
             val previewLines = 3 + (abs(note.id) % 4)
             binding.tvPreview.maxLines = previewLines
 
+            binding.cbChecked.setOnCheckedChangeListener(null)
+            binding.cbChecked.isChecked = note.isChecked
+            applyCheckedState(note.isChecked)
+            binding.cbChecked.setOnCheckedChangeListener { _, isChecked ->
+                onNoteCheckedChanged(note, isChecked)
+            }
+
             binding.root.setOnClickListener {
                 onNoteClicked(note)
+            }
+        }
+
+        private fun applyCheckedState(isChecked: Boolean) {
+            if (isChecked) {
+                binding.tvTitle.paintFlags =
+                    binding.tvTitle.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+                binding.tvPreview.paintFlags =
+                    binding.tvPreview.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+                binding.tvTitle.alpha = 0.72f
+                binding.tvPreview.alpha = 0.72f
+            } else {
+                binding.tvTitle.paintFlags =
+                    binding.tvTitle.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+                binding.tvPreview.paintFlags =
+                    binding.tvPreview.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+                binding.tvTitle.alpha = 1f
+                binding.tvPreview.alpha = 1f
             }
         }
     }

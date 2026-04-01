@@ -60,6 +60,18 @@ class NotesViewModel @Inject constructor(
         }
     }
 
+    fun onNoteCheckedChanged(note: Note, isChecked: Boolean) {
+        if (note.isChecked == isChecked) return
+
+        viewModelScope.launch {
+            try {
+                noteRepository.update(note.copy(isChecked = isChecked))
+            } catch (_: Exception) {
+                _events.emit(NotesEvent.ShowMessage("Failed to update note"))
+            }
+        }
+    }
+
     fun onSortOptionChanged(sortOption: NoteSortOption) {
         _uiState.value = _uiState.value.copy(
             sortOption = sortOption,
@@ -104,6 +116,13 @@ class NotesViewModel @Inject constructor(
     }
 
     private fun sortNotes(notes: List<Note>, sortOption: NoteSortOption): List<Note> {
+        val activeNotes = notes.filterNot { it.isChecked }
+        val checkedNotes = notes.filter { it.isChecked }
+
+        return sortByOption(activeNotes, sortOption) + sortByOption(checkedNotes, sortOption)
+    }
+
+    private fun sortByOption(notes: List<Note>, sortOption: NoteSortOption): List<Note> {
         return when (sortOption) {
             NoteSortOption.NEWEST -> notes.sortedByDescending { it.timestamp }
             NoteSortOption.OLDEST -> notes.sortedBy { it.timestamp }

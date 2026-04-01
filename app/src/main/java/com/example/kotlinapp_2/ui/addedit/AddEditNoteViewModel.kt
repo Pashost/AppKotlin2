@@ -28,6 +28,7 @@ class AddEditNoteViewModel @Inject constructor(
     val events: SharedFlow<AddEditNoteEvent> = _events.asSharedFlow()
 
     private val noteId: Int = savedStateHandle["noteId"] ?: -1
+    private var currentIsChecked: Boolean = false
 
     init {
         loadNoteIfNeeded()
@@ -50,6 +51,7 @@ class AddEditNoteViewModel @Inject constructor(
                             title = title.trim(),
                             content = content.trim(),
                             timestamp = System.currentTimeMillis(),
+                            isChecked = currentIsChecked,
                         )
                     )
                 } else {
@@ -79,6 +81,7 @@ class AddEditNoteViewModel @Inject constructor(
             try {
                 val note = noteRepository.getNoteById(noteId)
                 if (note != null) {
+                    currentIsChecked = note.isChecked
                     _uiState.value = AddEditNoteUiState(
                         noteId = note.id,
                         isEditMode = true,
