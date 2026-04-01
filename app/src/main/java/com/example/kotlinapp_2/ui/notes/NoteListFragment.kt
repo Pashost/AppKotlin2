@@ -13,8 +13,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.kotlinapp_2.R
 import com.example.kotlinapp_2.databinding.FragmentNoteListBinding
 import com.example.kotlinapp_2.utils.showModernSnackbar
@@ -106,7 +106,9 @@ class NoteListFragment : Fragment() {
 
         binding.recyclerView.apply {
             adapter = notesAdapter
-            layoutManager = LinearLayoutManager(requireContext())
+            layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL).apply {
+                gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS
+            }
             setHasFixedSize(true)
         }
     }
