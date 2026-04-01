@@ -26,7 +26,8 @@ object DatabaseModule {
             context,
             NoteDatabase::class.java,
             Constants.DATABASE_NAME,
-        ).build()
+        ).addMigrations(NoteDatabase.MIGRATION_1_2)
+            .build()
     }
 
     @Provides

@@ -23,4 +23,6 @@
     <string name="sort_title">Title A-Z</string>
     <string name="editor_stats">%1$d characters | %2$d words</string>
     <string name="clear">Clear</string>
+    <string name="mark_note_checked">Mark note as checked</string>
+    <string name="note_progress_status">Progress: %1$d%% (%2$d/%3$d done)</string>
 </resources>

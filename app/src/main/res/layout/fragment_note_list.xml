@@ -25,6 +25,18 @@
             app:titleCentered="false"
             app:titleTextAppearance="@style/TextAppearance.MaterialComponents.Headline6"
             app:titleTextColor="@color/md_theme_on_background" />
+
+            <TextView
+                android:id="@+id/tvProgressStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="16dp"
+                android:paddingTop="2dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="10dp"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                android:textColor="@color/md_theme_text_muted"
+                android:text="@string/note_progress_status" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <FrameLayout
